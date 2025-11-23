@@ -43,7 +43,7 @@ answerInput.addEventListener('input', () => {
 let addRange1, addRange2, addRange3, addRange4;
 let mulRange1, mulRange2, mulRange3, mulRange4;
 
-document.getElementById('start-btn').onclick = () => {
+function parseSettings() {
     addRange1 = parseInt(addRange1Input.value);
     addRange2 = parseInt(addRange2Input.value);
     addRange3 = parseInt(addRange3Input.value);
@@ -65,10 +65,11 @@ document.getElementById('start-btn').onclick = () => {
     }
 
     // TODO: Add range checks for add/mul ranges and time
+}
 
-    document.getElementById('settings').style.display = 'none';
-    document.getElementById('game').style.display = 'block';
-
+function runGame() {
+    score = 0;
+    scoreText.textContent = score;
     timeLeft = parseInt(timeLimitInput.value);
     document.getElementById('time').textContent = timeLeft;
 
@@ -79,6 +80,13 @@ document.getElementById('start-btn').onclick = () => {
         document.getElementById('time').textContent = timeLeft;
         if (timeLeft <= 0) endGame();
     }, 1000);
+}
+
+document.getElementById('start-btn').onclick = () => {
+    parseSettings();
+    document.getElementById('settings').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    runGame();
 };
 
 function generateProblem() {
@@ -121,9 +129,39 @@ function handleCorrectAnswer() {
 // End game
 function endGame() {
     clearInterval(timerId);
+    document.getElementById('settings').style.display = 'none';
     document.getElementById('game').style.display = 'none';
     document.getElementById('stats').style.display = 'block';
     document.getElementById('final-score').textContent = score;
+}
 
-    // TODO Implement Play Again and Change Settings
+function playAgain() {
+    clearInterval(timerId)
+    document.getElementById('settings').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    document.getElementById('stats').style.display = 'none';
+    runGame();
+}
+
+function changeSettings() {
+    clearInterval(timerId)
+    document.getElementById('settings').style.display = 'block';
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('stats').style.display = 'none';
+}
+
+document.getElementById('reset-btn').onclick = () => {
+    playAgain();
+}
+
+document.getElementById('in-game-change-settings-btn').onclick = () => {
+    changeSettings();
+}
+
+document.getElementById('play-again-btn').onclick = () => {
+    playAgain();
+}
+
+document.getElementById('change-settings-btn').onclick = () => {
+    changeSettings();
 }
