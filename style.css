@@ -1,0 +1,92 @@
+body {
+    font-family: sans-serif;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    font-size: 16px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#settings {
+    background-color: #ddd;
+    padding: 5px 10px 10px 10px;
+}
+
+#settings h2 {
+    text-align: center;
+}
+
+#settings .range-input {
+    width: 50px;
+    font-size: 14px;
+}
+
+#settings p {
+    padding-left: 40px;
+    margin: 2px 0px 10px 0px
+}
+
+#start-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-size: 16px;
+    width: 140px;
+    height: 30px;
+}
+
+#game {
+    display: none;
+    margin-top: 20px;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+#in-game-stats-container {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+#problem-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#problem {
+    font-size: 36px;
+    margin: 20px 0;
+}
+
+#answer {
+    font-size: 36px;
+    width: 150px;
+    height: 60px;
+    text-align: center;
+}
+
+#stats {
+    display: none;
+    margin-top: 20px;
+}
+
+#final-score-container {
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#stats-btns-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}

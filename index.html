@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Arithmetic Trainer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Arithmetic Game</h1>
+
+    <div id="settings">
+        <h2>Settings</h2>
+        <label><input type="checkbox" id="add" checked>Addition</label><br>
+        <p>Range:
+            (<input type="number" id="add-range-1" class="range-input" value="2"> to <input type="number" id="add-range-2" class="range-input" value="100">)
+            + (<input type="number" id="add-range-3" class="range-input" value="2"> to <input type="number" id="add-range-4" class="range-input" value="100">)
+        </p>
+        <label><input type="checkbox" id="sub" checked>Subtraction</label><br>
+        <p>
+            Addition problems in reverse.
+        </p>
+        <label><input type="checkbox" id="mul" checked>Multiplication</label><br>
+        <p>Range:
+            (<input type="number" id="mul-range-1" class="range-input" value="2"> to <input type="number" id="mul-range-2" class="range-input" value="12">)
+            × (<input type="number" id="mul-range-3" class="range-input" value="2"> to <input type="number" id="mul-range-4" class="range-input" value="100">)
+        </p>
+        <label><input type="checkbox" id="div" checked>Division</label><br>
+        <p>
+            Multiplication problems in reverse.
+        </p>
+
+        <label>Time limit (seconds): <input type="number" id="time-limit" class="range-input" value="120"></label><br><br>
+
+        <div id="start-btn-container"><button id="start-btn">Start Game</button></div>
+    </div>
+
+    <div id="game">
+        <div id="in-game-stats-container">
+            <div>Time left: <span id="time">120</span></div>
+            <div>Score: <span id="score">0</span></div>
+        </div>
+
+        <div id="problem-container">
+            <span id="problem"></span><input id="answer" autocomplete="off">
+        </div>
+    </div>
+
+    <div id="stats">
+        <div id="final-score-container">Score: <span id="final-score">0</span></div>
+        <div id="stats-btns-container">
+            <button id="play-again-btn">Play again</button>
+            <button id="change-settings">Change settings</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
