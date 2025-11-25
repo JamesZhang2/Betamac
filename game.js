@@ -55,7 +55,8 @@ function parseSettings() {
 
     operations = [];
     if (addBox.checked) operations.push('+');
-    if (subBox.checked) operations.push('-');
+    // Note that this is an en-dash, not the same character as the hyphen-minus sign on the keyboard!
+    if (subBox.checked) operations.push('–');
     if (mulBox.checked) operations.push('×');
     if (divBox.checked) operations.push('÷');
 
@@ -99,25 +100,25 @@ function generateProblem() {
         case '+':
             a = rand(addRange1, addRange2);
             b = rand(addRange3, addRange4);
-            return { text: `${a} + ${b} = `, answer: a + b, op: "+" };
-        case '-':
+            return { first: a, op: "+", second: b, answer: a + b };
+        case '–':
             a = rand(addRange1, addRange2);
             b = rand(addRange3, addRange4);
-            return { text: `${a + b} – ${a} = `, answer: b, op: "-" };
+            return { first: a + b, op: "–", second: a, answer: b };
         case '×':
             a = rand(mulRange1, mulRange2);
             b = rand(mulRange3, mulRange4);
-            return { text: `${a} × ${b} = `, answer: a * b, op: "×" };
+            return { first: a, op: "×", second: b, answer: a * b };
         case '÷':
             a = rand(mulRange1, mulRange2);
             b = rand(mulRange3, mulRange4);
-            return { text: `${a * b} ÷ ${a} = `, answer: b, op: "÷" };
+            return { first: a * b, op: "÷", second: a, answer: b };
     }
 }
 
 function nextProblem() {
     currentProblem = generateProblem();
-    problemText.textContent = currentProblem.text;
+    problemText.textContent = currentProblem.first + " " + currentProblem.op + " " + currentProblem.second + " = ";
 }
 
 function handleCorrectAnswer() {
