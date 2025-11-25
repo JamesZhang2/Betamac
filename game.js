@@ -73,6 +73,7 @@ function runGame() {
     timeLeft = parseInt(timeLimitInput.value);
     document.getElementById('time').textContent = timeLeft;
 
+    answerInput.value = "";
     answerInput.focus();
     nextProblem();
 
