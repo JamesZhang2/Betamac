@@ -4,6 +4,13 @@ body {
     margin: auto;
     padding: 20px;
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+}
+
+#main-content {
+    flex: 1;
 }
 
 h1 {
@@ -96,4 +103,9 @@ button {
     margin-top: 20px;
     display: flex;
     justify-content: space-around;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
 }
