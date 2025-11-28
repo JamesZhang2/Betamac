@@ -28,6 +28,11 @@ const answerInput = document.getElementById('answer');
 const scoreText = document.getElementById('score');
 const problemText = document.getElementById('problem');
 
+const showTimer = document.getElementById('show-timer');
+const showScore = document.getElementById('show-score');
+const timerInGameDiv = document.getElementById('timer-in-game');
+const scoreInGameDiv = document.getElementById('score-in-game');
+
 answerInput.addEventListener('input', () => {
     const value = answerInput.value.trim();
 
@@ -68,6 +73,18 @@ function parseSettings() {
     }
 
     // TODO: Add range checks for add/mul ranges and time
+
+    if (showTimer.checked) {
+        timerInGameDiv.style.visibility = 'visible';
+    } else {
+        timerInGameDiv.style.visibility = 'hidden';
+    }
+
+    if (showScore.checked) {
+        scoreInGameDiv.style.visibility = 'visible';
+    } else {
+        scoreInGameDiv.style.visibility = 'hidden';
+    }
 }
 
 function runGame() {

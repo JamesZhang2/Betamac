@@ -34,13 +34,16 @@
 
             <label>Time limit (seconds): <input type="number" id="time-limit" class="range-input" value="120"></label><br><br>
 
+            <label><input type="checkbox" id="show-timer" checked>Show timer in game</label><br>
+            <label><input type="checkbox" id="show-score" checked>Show score in game</label><br><br>
+
             <div id="start-btn-container"><button id="start-btn">Start Game</button></div>
         </div>
 
         <div id="game">
             <div id="in-game-stats-container">
-                <div>Time left: <span id="time">120</span></div>
-                <div>Score: <span id="score">0</span></div>
+                <div id="timer-in-game">Time left: <span id="time">120</span></div>
+                <div id="score-in-game">Score: <span id="score">0</span></div>
             </div>
 
             <div id="problem-container">
