@@ -68,7 +68,7 @@ function parseSettings() {
     if (divBox.checked) operations.push('÷');
 
     if (operations.length === 0) {
-        alert("Select at least one operation!");
+        alert('Select at least one operation!');
         return;
     }
 
@@ -95,7 +95,7 @@ function runGame() {
 
     stats = [];
 
-    answerInput.value = "";
+    answerInput.value = '';
     answerInput.focus();
     nextProblem();
 
@@ -121,33 +121,33 @@ function generateProblem() {
         case '+':
             a = rand(addRange1, addRange2);
             b = rand(addRange3, addRange4);
-            return { first: a, op: "+", second: b, answer: a + b };
+            return { first: a, op: '+', second: b, answer: a + b };
         case '–':
             a = rand(addRange1, addRange2);
             b = rand(addRange3, addRange4);
-            return { first: a + b, op: "–", second: a, answer: b };
+            return { first: a + b, op: '–', second: a, answer: b };
         case '×':
             a = rand(mulRange1, mulRange2);
             b = rand(mulRange3, mulRange4);
-            return { first: a, op: "×", second: b, answer: a * b };
+            return { first: a, op: '×', second: b, answer: a * b };
         case '÷':
             a = rand(mulRange1, mulRange2);
             b = rand(mulRange3, mulRange4);
-            return { first: a * b, op: "÷", second: a, answer: b };
+            return { first: a * b, op: '÷', second: a, answer: b };
     }
 }
 
 function nextProblem() {
     currentProblem = generateProblem();
     currentProblemStart = Date.now();
-    problemText.textContent = currentProblem.first + " " + currentProblem.op + " " + currentProblem.second + " = ";
+    problemText.textContent = currentProblem.first + ' ' + currentProblem.op + ' ' + currentProblem.second + ' = ';
 }
 
 function handleCorrectAnswer() {
     // TODO Track backspace stats
     score++;
     scoreText.textContent = score;
-    answerInput.value = "";
+    answerInput.value = '';
     const currentProblemEnd = Date.now();
     stats.push({ problem: currentProblem, time: currentProblemEnd - currentProblemStart });
     nextProblem();
@@ -155,30 +155,30 @@ function handleCorrectAnswer() {
 
 // Stats
 function statsToCSV(stats) {
-    csv = "first,op,second,answer,time\n";
+    csv = 'first,op,second,answer,time\n';
     for (const stat of stats) {
-        csv += stat.problem.first + "," + stat.problem.op + "," + stat.problem.second + "," + stat.problem.answer + "," + stat.time + "\n";
+        csv += stat.problem.first + ',' + stat.problem.op + ',' + stat.problem.second + ',' + stat.problem.answer + ',' + stat.time + '\n';
     }
     return csv;
 }
 
-document.getElementById("copy-to-clipboard-btn").addEventListener("click", () => {
+document.getElementById('copy-to-clipboard-btn').addEventListener('click', () => {
     const text = statsToCSV(stats);
     navigator.clipboard.writeText(text)
-        // .then(() => alert("Copied to clipboard!"))
-        .catch(err => alert("Error copying: " + err));
+        // .then(() => alert('Copied to clipboard!'))
+        .catch(err => alert('Error copying: ' + err));
 });
 
-document.getElementById("download-btn").addEventListener("click", () => {
+document.getElementById('download-btn').addEventListener('click', () => {
     const text = statsToCSV(stats);
     // Create Blob for download
-    const blob = new Blob([text], { type: "text/csv" });
+    const blob = new Blob([text], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
     const now = Date.now()
-    a.download = "arithmetic_game_results.csv";
+    a.download = 'arithmetic_game_results.csv';
     a.click();
 
     URL.revokeObjectURL(url);
@@ -186,23 +186,23 @@ document.getElementById("download-btn").addEventListener("click", () => {
 
 function showAnalytics(stats) {
     const opStats = {
-        "+": { count: 0, totalTime: 0 },
-        "–": { count: 0, totalTime: 0 },
-        "×": { count: 0, totalTime: 0 },
-        "÷": { count: 0, totalTime: 0 }
+        '+': { count: 0, totalTime: 0 },
+        '–': { count: 0, totalTime: 0 },
+        '×': { count: 0, totalTime: 0 },
+        '÷': { count: 0, totalTime: 0 }
     };
     for (const stat of stats) {
-        if (!["+", "–", "×", "÷"].includes(stat.problem.op)) {
-            throw new Error("Unrecognized operation: " + stat.problem.op);
+        if (!['+', '–', '×', '÷'].includes(stat.problem.op)) {
+            throw new Error('Unrecognized operation: ' + stat.problem.op);
         }
         opStats[stat.problem.op].count++;
         opStats[stat.problem.op].totalTime += stat.time;
     }
 
-    const tbody = document.querySelector("#analytics-table tbody");
-    tbody.innerHTML = "";
+    const tbody = document.querySelector('#analytics-table tbody');
+    tbody.innerHTML = '';
 
-    for (const op of ["+", "–", "×", "÷"]) {
+    for (const op of ['+', '–', '×', '÷']) {
         const data = opStats[op];
 
         // skip operations that did not appear
@@ -210,7 +210,7 @@ function showAnalytics(stats) {
 
         const avg = (data.totalTime / data.count).toFixed(1);
 
-        const tr = document.createElement("tr");
+        const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${op}</td>
             <td>${data.count}</td>
@@ -227,7 +227,7 @@ function endGame() {
     document.getElementById('game').style.display = 'none';
     document.getElementById('stats').style.display = 'block';
     document.getElementById('final-score').textContent = score;
-    document.getElementById("per-question-stats-box").value = statsToCSV(stats);
+    document.getElementById('per-question-stats-box').value = statsToCSV(stats);
     showAnalytics(stats);
 }
 
