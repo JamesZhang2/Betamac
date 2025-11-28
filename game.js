@@ -6,6 +6,7 @@ function rand(min, max) {
 let operations = [];
 let score = 0;
 let currentProblem;
+let timeLimit;
 let timeLeft = 0;
 let timerId;
 let currentProblemStart;
@@ -50,6 +51,7 @@ answerInput.addEventListener('input', () => {
 let addRange1, addRange2, addRange3, addRange4;
 let mulRange1, mulRange2, mulRange3, mulRange4;
 
+// Returns true if all settings are valid, false otherwise
 function parseSettings() {
     addRange1 = parseInt(addRange1Input.value);
     addRange2 = parseInt(addRange2Input.value);
@@ -60,6 +62,8 @@ function parseSettings() {
     mulRange3 = parseInt(mulRange3Input.value);
     mulRange4 = parseInt(mulRange4Input.value);
 
+    timeLimit = parseInt(timeLimitInput.value);
+
     operations = [];
     if (addBox.checked) operations.push('+');
     // Note that this is an en-dash, not the same character as the hyphen-minus sign on the keyboard!
@@ -69,10 +73,29 @@ function parseSettings() {
 
     if (operations.length === 0) {
         alert('Select at least one operation!');
-        return;
+        return false;
     }
 
-    // TODO: Add range checks for add/mul ranges and time
+    // Range checks for add/mul ranges and time
+    if ((addBox.checked || subBox.checked) && (addRange1 > addRange2 || addRange3 > addRange4)) {
+        alert('Invalid range for addition/subtraction');
+        return false;
+    }
+
+    if ((mulBox.checked || divBox.checked) && (mulRange1 > mulRange2 || mulRange3 > mulRange4)) {
+        alert('Invalid range for multiplication/division');
+        return false;
+    }
+
+    if (divBox.checked && mulRange1 <= 0 && mulRange2 >= 0) {
+        alert('The first value in the multiplication range is the divisor in division problems. It cannot contain 0.');
+        return false;
+    }
+
+    if (timeLimit <= 0) {
+        alert('Invalid time limit');
+        return false;
+    }
 
     if (showTimer.checked) {
         timerInGameDiv.style.visibility = 'visible';
@@ -85,12 +108,13 @@ function parseSettings() {
     } else {
         scoreInGameDiv.style.visibility = 'hidden';
     }
+    return true;
 }
 
 function runGame() {
     score = 0;
     scoreText.textContent = score;
-    timeLeft = parseInt(timeLimitInput.value);
+    timeLeft = timeLimit;
     document.getElementById('time').textContent = timeLeft;
 
     stats = [];
@@ -107,7 +131,10 @@ function runGame() {
 }
 
 document.getElementById('start-btn').onclick = () => {
-    parseSettings();
+    const settingsValid = parseSettings()
+    if (!settingsValid) {
+        return;
+    }
     document.getElementById('settings').style.display = 'none';
     document.getElementById('game').style.display = 'block';
     runGame();
