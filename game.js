@@ -136,9 +136,10 @@ function handleCorrectAnswer() {
     nextProblem();
 }
 
+// Stats
 function statsToCSV(stats) {
     csv = "first,op,second,answer,time\n";
-    for (let stat of stats) {
+    for (const stat of stats) {
         csv += stat.problem.first + "," + stat.problem.op + "," + stat.problem.second + "," + stat.problem.answer + "," + stat.time + "\n";
     }
     return csv;
@@ -166,6 +167,42 @@ document.getElementById("download-btn").addEventListener("click", () => {
     URL.revokeObjectURL(url);
 });
 
+function showAnalytics(stats) {
+    const opStats = {
+        "+": { count: 0, totalTime: 0 },
+        "–": { count: 0, totalTime: 0 },
+        "×": { count: 0, totalTime: 0 },
+        "÷": { count: 0, totalTime: 0 }
+    };
+    for (const stat of stats) {
+        if (!["+", "–", "×", "÷"].includes(stat.problem.op)) {
+            throw new Error("Unrecognized operation: " + stat.problem.op);
+        }
+        opStats[stat.problem.op].count++;
+        opStats[stat.problem.op].totalTime += stat.time;
+    }
+
+    const tbody = document.querySelector("#analytics-table tbody");
+    tbody.innerHTML = "";
+
+    for (const op of ["+", "–", "×", "÷"]) {
+        const data = opStats[op];
+
+        // skip operations that did not appear
+        if (data.count === 0) continue;
+
+        const avg = (data.totalTime / data.count).toFixed(1);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${op}</td>
+            <td>${data.count}</td>
+            <td>${avg}</td>
+        `;
+        tbody.appendChild(tr);
+    }
+}
+
 // End game
 function endGame() {
     clearInterval(timerId);
@@ -174,6 +211,7 @@ function endGame() {
     document.getElementById('stats').style.display = 'block';
     document.getElementById('final-score').textContent = score;
     document.getElementById("per-question-stats-box").value = statsToCSV(stats);
+    showAnalytics(stats);
 }
 
 function playAgain() {

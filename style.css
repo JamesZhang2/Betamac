@@ -135,6 +135,35 @@ button {
     justify-content: space-around;
 }
 
+#analytics {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#analytics-table {
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 500px;
+}
+
+#analytics-table th,
+#analytics-table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+#analytics-table th {
+    background: #eee;
+    font-weight: bold;
+}
+
+
+#analytics-table td {
+    background: #f7f7f7;
+}
+
 footer {
     display: flex;
     justify-content: center;
