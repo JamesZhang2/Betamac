@@ -8,6 +8,8 @@ let score = 0;
 let currentProblem;
 let timeLeft = 0;
 let timerId;
+let currentProblemStart;
+let stats = [];
 
 const addBox = document.getElementById('add');
 const subBox = document.getElementById('sub');
@@ -74,6 +76,8 @@ function runGame() {
     timeLeft = parseInt(timeLimitInput.value);
     document.getElementById('time').textContent = timeLeft;
 
+    stats = [];
+
     answerInput.value = "";
     answerInput.focus();
     nextProblem();
@@ -118,16 +122,49 @@ function generateProblem() {
 
 function nextProblem() {
     currentProblem = generateProblem();
+    currentProblemStart = Date.now();
     problemText.textContent = currentProblem.first + " " + currentProblem.op + " " + currentProblem.second + " = ";
 }
 
 function handleCorrectAnswer() {
-    // TODO Track stats
+    // TODO Track backspace stats
     score++;
     scoreText.textContent = score;
     answerInput.value = "";
+    const currentProblemEnd = Date.now();
+    stats.push({ problem: currentProblem, time: currentProblemEnd - currentProblemStart });
     nextProblem();
 }
+
+function statsToCSV(stats) {
+    csv = "first,op,second,answer,time\n";
+    for (let stat of stats) {
+        csv += stat.problem.first + "," + stat.problem.op + "," + stat.problem.second + "," + stat.problem.answer + "," + stat.time + "\n";
+    }
+    return csv;
+}
+
+document.getElementById("copy-to-clipboard-btn").addEventListener("click", () => {
+    const text = statsToCSV(stats);
+    navigator.clipboard.writeText(text)
+        // .then(() => alert("Copied to clipboard!"))
+        .catch(err => alert("Error copying: " + err));
+});
+
+document.getElementById("download-btn").addEventListener("click", () => {
+    const text = statsToCSV(stats);
+    // Create Blob for download
+    const blob = new Blob([text], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    const now = Date.now()
+    a.download = "arithmetic_game_results.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+});
 
 // End game
 function endGame() {
@@ -136,6 +173,7 @@ function endGame() {
     document.getElementById('game').style.display = 'none';
     document.getElementById('stats').style.display = 'block';
     document.getElementById('final-score').textContent = score;
+    document.getElementById("per-question-stats-box").value = statsToCSV(stats);
 }
 
 function playAgain() {

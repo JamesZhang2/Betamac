@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 95vh;
+    box-sizing: border-box;
 }
 
 #main-content {
@@ -99,8 +100,37 @@ button {
     gap: 10px;
 }
 
+#per-question-stats-container {
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#per-question-stats-box {
+    width: 90%;
+    height: 200px;
+    resize: vertical;
+    overflow-y: scroll;
+    font-family: monospace;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.per-question-stats-btns-container {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+#stats button {
+    width: 200px;
+}
+
 #stats-btns-container {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-around;
 }
